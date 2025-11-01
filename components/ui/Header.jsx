@@ -4,6 +4,7 @@
   import Link from "next/link";
   import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
+<<<<<<< HEAD
   export function Header() {
     return (
       <motion.nav
@@ -21,6 +22,25 @@
               Adverto
             </Link>
           </motion.div>
+=======
+export function Header() {
+  return (
+    <motion.nav
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10"
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <motion.div whileHover={{ scale: 1.05 }}>
+          <Link
+            href="/"
+            className="text-2xl font-bold tracking-tight text-white hover:text-neutral-300 transition-colors"
+          >
+            Adverto
+          </Link>
+        </motion.div>
+>>>>>>> dd84e7aa727056cb73afc749debd1143cfc1be3a
 
           <div className="flex gap-8 items-center">
             <SignedOut>

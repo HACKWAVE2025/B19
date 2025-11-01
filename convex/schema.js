@@ -9,4 +9,12 @@ export default defineSchema({
     name: v.string(),
     username: v.optional(v.string()),
   }).index("by_clerk_id", ["clerkId"]),  
+  onboardings: defineTable({
+    userId: v.optional(v.string()), // Clerk ID if you’re using Clerk
+    brandName: v.string(),
+    logo: v.optional(v.string()),
+    tone: v.string(),
+    platforms: v.array(v.string()),
+    createdAt: v.string(),
+  }).index("by_userId", ["userId"]),
 });
