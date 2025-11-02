@@ -4,7 +4,6 @@ import './globals.css';
 import { League_Spartan } from 'next/font/google';
 import ReactLenis from '@studio-freight/react-lenis';
 import ConvexClerkProvider from '@/components/provider/ConvexClientProvider';
-import { Header } from '@/components/ui/Header';
 
 const font = League_Spartan({ subsets: ['latin'] });
 
@@ -12,10 +11,9 @@ export default function RootLayout({ children }) {
   return (
     <ConvexClerkProvider>
       <html lang="en">
-        <body className={`${font.className} antialiased`}>
+        <body className={`${font.className} antialiased`} suppressHydrationWarning>
           <ReactLenis root>
-            <Header />
-            <main className="pt-15">{children}</main>
+            <main>{children}</main>
           </ReactLenis>
         </body>
       </html>

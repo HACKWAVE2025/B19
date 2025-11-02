@@ -11,6 +11,7 @@ import { ConfirmStep } from "@/components/onboarding/confirm-step"
 import { ProgressBar } from "@/components/onboarding/progress-bar"
 import { useMutation } from "convex/react"
 import { api } from "@/convex/_generated/api"
+import { Header } from "@/components/ui/Header"
 
 const steps = ["Brand", "Logo", "Tone", "Platforms", "Confirm"]
 
@@ -51,7 +52,8 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-black flex flex-col">
+      <Header />
       <ProgressBar current={currentStep + 1} total={steps.length} />
 
       <div className="flex-1 flex items-center justify-center px-4">

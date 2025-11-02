@@ -2,31 +2,34 @@
 
 import { motion } from "framer-motion"
 
-const tones = ["Friendly", "Professional", "Witty", "Inspirational"]
+const tones = ["Professional", "Friendly", "Playful", "Bold", "Minimal"]
 
 export function ToneStep({ value, onChange }) {
   return (
-    <motion.div className="space-y-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-      <div>
-        <h2 className="text-3xl font-bold text-black mb-2">What's your brand tone?</h2>
-        <p className="text-gray-600">Choose the voice that best represents your brand</p>
-      </div>
+    <motion.div
+      key="tone-step"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="flex flex-col gap-4 text-white"
+    >
+      <h2 className="text-2xl font-semibold text-[#f97316]">Choose your brand tone</h2>
+      <p className="text-gray-400">Select one that best describes your communication style</p>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="flex flex-wrap gap-3 mt-4">
         {tones.map((tone) => (
-          <motion.button
+          <button
             key={tone}
             onClick={() => onChange(tone)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`p-4 rounded-lg border-2 transition-all ${
+            className={`px-4 py-2 rounded-lg border ${
               value === tone
-                ? "border-black bg-black text-white"
-                : "border-border bg-white text-black hover:border-black"
+                ? "bg-[#f97316] text-black border-[#f97316]"
+                : "border-gray-600 text-white hover:border-[#f97316]"
             }`}
           >
-            <span className="font-semibold">{tone}</span>
-          </motion.button>
+            {tone}
+          </button>
         ))}
       </div>
     </motion.div>

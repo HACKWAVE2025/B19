@@ -1,4 +1,4 @@
-import { query, mutation } from "./_generated/server"
+import { mutation, query } from "./_generated/server"
 import { v } from "convex/values"
 
 export const saveOnboarding = mutation({
@@ -27,7 +27,6 @@ export const getOnboardings = query({
         .withIndex("by_userId", (q) => q.eq("userId", args.userId))
         .collect()
     }
-    // fallback (if not using auth)
     return await ctx.db.query("onboardings").collect()
   },
 })
@@ -36,5 +35,27 @@ export const getOnboardingById = query({
   args: { id: v.id("onboardings") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id)
+  },
+})
+
+export const updateOnboarding = mutation({
+  args: {
+    id: v.id("onboardings"),
+    brandName: v.optional(v.string()),
+    logo: v.optional(v.string()),
+    tone: v.optional(v.string()),
+    platforms: v.optional(v.array(v.string())),
+  },
+  handler: async (ctx, args) => {
+    const { id, ...fields } = args
+    await ctx.db.patch(id, fields)
+    return id
+  },
+})
+
+export const deleteOnboarding = mutation({
+  args: { id: v.id("onboardings") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete(args.id)
   },
 })

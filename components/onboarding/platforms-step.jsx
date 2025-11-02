@@ -2,46 +2,40 @@
 
 import { motion } from "framer-motion"
 
-const platforms = ["Instagram", "TikTok", "LinkedIn", "YouTube", "Facebook", "Twitter"]
+const platforms = ["Instagram", "YouTube", "Twitter", "LinkedIn", "Facebook"]
 
-export function PlatformsStep({ value, onChange} ) {
+export function PlatformsStep({ value, onChange }) {
   const togglePlatform = (platform) => {
-    if (value.includes(platform)) {
-      onChange(value.filter((p) => p !== platform))
-    } else {
-      onChange([...value, platform])
-    }
+    if (value.includes(platform)) onChange(value.filter((p) => p !== platform))
+    else onChange([...value, platform])
   }
 
   return (
-    <motion.div className="space-y-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-      <div>
-        <h2 className="text-3xl font-bold text-black mb-2">Where do you want to advertise?</h2>
-        <p className="text-gray-600">Select the platforms where your audience is most active</p>
-      </div>
+    <motion.div
+      key="platforms-step"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="flex flex-col gap-4 text-white"
+    >
+      <h2 className="text-2xl font-semibold text-[#f97316]">Select your platforms</h2>
+      <p className="text-gray-400">Where do you want to run your campaigns?</p>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {platforms.map((platform) => (
-          <motion.button
-            key={platform}
-            onClick={() => togglePlatform(platform)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`p-4 rounded-lg border-2 transition-all ${
-              value.includes(platform)
-                ? "border-black bg-black text-white"
-                : "border-border bg-white text-black hover:border-black"
+      <div className="flex flex-wrap gap-3 mt-4">
+        {platforms.map((p) => (
+          <button
+            key={p}
+            onClick={() => togglePlatform(p)}
+            className={`px-4 py-2 rounded-lg border ${
+              value.includes(p)
+                ? "bg-[#f97316] text-black border-[#f97316]"
+                : "border-gray-600 text-white hover:border-[#f97316]"
             }`}
           >
-            <span className="font-semibold">{platform}</span>
-          </motion.button>
+            {p}
+          </button>
         ))}
-      </div>
-
-      <div className="p-4 bg-gray-50 rounded-lg">
-        <p className="text-sm text-gray-700">
-          <span className="font-semibold">{value.length}</span> platform{value.length !== 1 ? "s" : ""} selected
-        </p>
       </div>
     </motion.div>
   )

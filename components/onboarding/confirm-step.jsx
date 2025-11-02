@@ -4,38 +4,35 @@ import { motion } from "framer-motion"
 
 export function ConfirmStep({ formData }) {
   return (
-    <motion.div className="space-y-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-      <div>
-        <h2 className="text-3xl font-bold text-black mb-2">Review your setup</h2>
-        <p className="text-gray-600">Everything looks good! Let's create your campaign</p>
+    <motion.div
+      key="confirm-step"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="flex flex-col gap-6 text-white bg-gray-500/10 p-6"
+    >
+      <h2 className="text-2xl font-semibold text-[#f97316]">Confirm your details</h2>
+
+      <div className="space-y-3">
+        <p><span className="text-[#f97316]">Brand:</span> {formData.brandName || "Not provided"}</p>
+        <p><span className="text-[#f97316]">Tone:</span> {formData.tone || "Not selected"}</p>
+        <p>
+          <span className="text-[#f97316]">Platforms:</span>{" "}
+          {formData.platforms.length ? formData.platforms.join(", ") : "None selected"}
+        </p>
       </div>
 
-      <div className="space-y-4">
-        <div className="p-4 bg-gray-50 rounded-lg border border-border">
-          <p className="text-sm text-gray-600 mb-1">Brand Name</p>
-          <p className="text-lg font-semibold text-black">{formData.brandName || "Not set"}</p>
+      {formData.logo && (
+        <div>
+          <span className="text-[#f97316]">Logo Preview:</span>
+          <img
+            src={URL.createObjectURL(formData.logo)}
+            alt="logo preview"
+            className="mt-3 w-24 h-24 object-contain border border-[#f97316] rounded-lg"
+          />
         </div>
-
-        <div className="p-4 bg-gray-50 rounded-lg border border-border">
-          <p className="text-sm text-gray-600 mb-1">Brand Tone</p>
-          <p className="text-lg font-semibold text-black">{formData.tone || "Not set"}</p>
-        </div>
-
-        <div className="p-4 bg-gray-50 rounded-lg border border-border">
-          <p className="text-sm text-gray-600 mb-1">Advertising Platforms</p>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {formData.platforms.length > 0 ? (
-              formData.platforms.map((platform) => (
-                <span key={platform} className="inline-block px-3 py-1 bg-black text-white rounded-full text-sm">
-                  {platform}
-                </span>
-              ))
-            ) : (
-              <span className="text-gray-600">Not set</span>
-            )}
-          </div>
-        </div>
-      </div>
+      )}
     </motion.div>
   )
 }

@@ -9,19 +9,19 @@ export function EmptyState() {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4 }}
-      className="flex flex-col items-center justify-center py-24 text-center"
+      className="flex flex-col items-center justify-center py-24 text-center text-white"
     >
       <div className="mb-6">
-        <div className="w-20 h-20 mx-auto bg-black rounded-lg flex items-center justify-center mb-4">
-          <span className="text-3xl">✨</span>
+        <div className="w-20 h-20 mx-auto bg-orange-500 rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-orange-500/20">
+          <span className="text-3xl text-black">✨</span>
         </div>
-        <h2 className="text-2xl font-bold text-black mb-2">No campaigns yet</h2>
-        <p className="text-gray-600 mb-8">Create your first campaign to get started with AI-powered ad generation</p>
+        <h2 className="text-2xl font-bold mb-2">No campaigns yet</h2>
+        <p className="text-gray-400 mb-8">Create your first campaign to get started with AI-powered ad generation</p>
       </div>
 
       <Link
-        href="/create-campaign"
-        className="px-8 py-3 bg-black text-white rounded-lg hover:bg-gray-900 transition-colors font-semibold"
+        href="/onboarding"
+        className="px-8 py-3 bg-orange-500 text-black rounded-lg hover:bg-orange-600 transition-colors font-semibold"
       >
         Create Your First Campaign
       </Link>

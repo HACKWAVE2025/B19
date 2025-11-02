@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as chats from "../chats.js";
 import type * as http from "../http.js";
 import type * as onboarding from "../onboarding.js";
 import type * as users from "../users.js";
@@ -27,6 +28,7 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  chats: typeof chats;
   http: typeof http;
   onboarding: typeof onboarding;
   users: typeof users;

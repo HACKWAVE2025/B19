@@ -5,6 +5,7 @@ import { useQuery } from "convex/react"
 import { api } from "@/convex/_generated/api"
 import { useRouter } from "next/navigation"
 import { EmptyState } from "@/components/dashboard/empty-state"
+import { PlusCircle, Rocket } from "lucide-react"
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -13,65 +14,87 @@ export default function DashboardPage() {
 
   if (!onboardings) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-600">Loading your campaigns...</p>
+      <div className="min-h-screen flex items-center justify-center bg-[#0b0b0b] text-gray-400">
+        <p>Loading your campaigns...</p>
       </div>
     )
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="min-h-screen bg-white py-12 px-4"
-    >
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-12">
-          <div>
-            <h1 className="text-4xl font-bold text-black mb-2">Your Brands</h1>
-            <p className="text-gray-600">Select a brand to continue your AI-powered journey</p>
-          </div>
-
-          <button
-            onClick={() => router.push("/onboarding")}
-            className="px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-900 transition-colors font-medium"
-          >
-            + Add New Brand
-          </button>
+    <div className="min-h-screen bg-[#0b0b0b] text-white relative overflow-hidden">
+      {/* Header */}
+      <motion.header
+        initial={{ y: -15, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="sticky top-0 z-20 flex items-center justify-between px-10 py-5 border-b border-white/10 backdrop-blur-md bg-[#101010]/80"
+      >
+        <div className="flex items-center gap-3">
+          <h1 className="text-3xl font-bold tracking-tight">Your Campaigns</h1>
         </div>
 
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => router.push("/onboarding")}
+          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-black font-semibold shadow-md hover:shadow-orange-500/30 transition-all"
+        >
+          <PlusCircle className="w-5 h-5" />
+          New Campaign
+        </motion.button>
+      </motion.header>
+
+      {/* Main */}
+      <main className="relative z-10 max-w-7xl mx-auto px-6 py-14">
         {isEmpty ? (
           <EmptyState />
         ) : (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ staggerChildren: 0.1 }}
-            className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+            initial="hidden"
+            animate="show"
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.08 },
+              },
+            }}
+            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
             {onboardings.map((brand) => (
               <motion.div
                 key={brand._id}
-                whileHover={{ scale: 1.02 }}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                whileHover={{
+                  y: -6,
+                  boxShadow: "0px 0px 25px rgba(255, 140, 0, 0.15)",
+                }}
+                transition={{ type: "spring", stiffness: 200, damping: 18 }}
                 onClick={() => router.push(`/dashboard/${brand._id}`)}
-                className="p-6 border border-border rounded-lg bg-white hover:shadow-lg transition-shadow cursor-pointer"
+                className="group relative p-6 rounded-2xl border border-white/10 bg-[#141414]/70 backdrop-blur-sm hover:border-orange-500/50 transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-4 mb-4">
                   {brand.logo ? (
-                    <img
-                      src={brand.logo}
-                      alt={brand.brandName}
-                      className="w-12 h-12 rounded-lg object-contain border border-gray-200"
-                    />
+                    <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center border border-white/10 shadow-md overflow-hidden">
+                      <img
+                        src={brand.logo}
+                        alt={brand.brandName}
+                        className="object-contain w-12 h-12"
+                      />
+                    </div>
                   ) : (
-                    <div className="w-12 h-12 bg-gray-100 flex items-center justify-center rounded-lg">
-                      <span className="text-gray-500 text-xl">🏷️</span>
+                    <div className="w-14 h-14 bg-[#1f1f1f] rounded-xl flex items-center justify-center border border-white/10">
+                      <Rocket className="w-6 h-6 text-orange-500" />
                     </div>
                   )}
                   <div>
-                    <h3 className="text-xl font-semibold text-black">{brand.brandName}</h3>
-                    <p className="text-gray-600 text-sm capitalize">{brand.tone}</p>
+                    <h3 className="text-lg font-semibold group-hover:text-orange-400 transition-colors">
+                      {brand.brandName}
+                    </h3>
+                    <p className="text-gray-400 text-sm capitalize">{brand.tone}</p>
                   </div>
                 </div>
 
@@ -79,21 +102,21 @@ export default function DashboardPage() {
                   {brand.platforms.map((p) => (
                     <span
                       key={p}
-                      className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700"
+                      className="text-xs px-3 py-1 rounded-full bg-[#1e1e1e] border border-white/10 text-gray-300 group-hover:border-orange-400/40 transition-colors"
                     >
                       {p}
                     </span>
                   ))}
                 </div>
 
-                <p className="text-xs text-gray-400 mt-4">
-                  Created on {new Date(brand.createdAt).toLocaleDateString()}
+                <p className="text-xs text-gray-500 mt-4">
+                  Created {new Date(brand.createdAt).toLocaleDateString()}
                 </p>
               </motion.div>
             ))}
           </motion.div>
         )}
-      </div>
-    </motion.div>
+      </main>
+    </div>
   )
 }
